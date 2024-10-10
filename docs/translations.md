@@ -9,14 +9,11 @@ parent: Advanced
 
 ## Introduction
 
-There are several ways to support multiple languages within your application.
+There are good packages that allow you to add support for multiple languages to your application.
 
-## Gettext
+## Read more
 
-* [Translations with gettext](https://odan.github.io/2020/12/09/slim4-php-view.html#translations)
-* [gettext/gettext](https://github.com/php-gettext/Gettext)
-
-## Twig Translations
-
-* [Twig Translations](https://odan.github.io/2020/04/17/slim4-twig-templates.html#translations)
+* [Translations with gettext](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
+* [Twig Translations](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
+* [Symfony Translations](https://ko-fi.com/s/e592c10b5f) (Slim 4 - eBook Vol. 2)
 * [Twig Reference](https://symfony.com/doc/current/reference/twig_reference.html#trans)

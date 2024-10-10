@@ -9,11 +9,23 @@ nav_order: 3
 
 The directory structure is based on the [Standard PHP package skeleton](https://github.com/php-pds/skeleton).
 
+The `public` directory in your project contains 
+the front-controller `index.php` and other web accessible files
+such as images, CC and JavaScript files.
+
+The `src` directory contains the core code for your application.
+
+The `config` directory contains the application settings such as
+the routes, service container, database connection and so on.
+
+The `templates` directory contains the view templates 
+for your application. You can use the Slim Framework's 
+template engine, or you can use a third-party 
+template engine such as Twig or Latte.
+
 {% raw %}
 ```
 .
-├── bin                     # Excecutable files
-│   └── console.php         # The command line tool
 ├── build                   # Compiled files (artifacts)
 ├── config                  # Configuration files
 ├── docs                    # Documentation files
@@ -24,18 +36,15 @@ The directory structure is based on the [Standard PHP package skeleton](https://
 │   ├── seeds               # Data seeds
 │   └── translations        # The .po message files for PoEdit
 ├── src                     # PHP source code (The App namespace)
-│   ├── Action              # Controller actions (application layer)
-│   ├── Console             # Console commands for console.php
-│   ├── Domain              # The business logic
-│   ├── Factory             # Factories
-│   ├── Responder           # Responder and Url helper (application layer)
-│   ├── Middleware          # Middleware (application layer)
+│   ├── Action              # Controller actions (HTTP layer)
+│   ├── Console             # Console commands
+│   ├── Domain              # The core application
+│   ├── Renderer            # Render and Url helper (HTTP layer)
+│   ├── Middleware          # Middleware (HTTP layer)
 │   └── Support             # Helper classes and functions
-├── templates               # Twig and Vue templates + JS and CSS
+├── templates               # HTML templates
 ├── tests                   # Automated tests
 ├── tmp                     # Temporary files
-│   ├── translations        # Locale cache
-│   └── twig                # Internal twig cache
 ├── vendor                  # Reserved for composer
 ├── build.xml               # Ant build tasks
 ├── composer.json           # Project dependencies

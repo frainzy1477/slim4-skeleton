@@ -33,37 +33,6 @@ Testing units in isolation of its dependencies.
 Unit tests should test the behavior and not the implementation details of your classes.
 Make sure that unit tests are running in-memory only, because they have to be very fast. 
 
-## Mocking
-
-When testing Slim applications, you may wish to "mock" certain aspects of your 
-application, so they are not actually executed during a test. 
-For example, when testing a service that needs a repository, 
-you may wish to mock the repository so that it's not actually 
-executed queries during the test.
-
-The `AppTestTrait` provides methods for mocking objects into the container.
-
-Mocking methods:
-
-```php
-$this->mock(UserCreator::class)->method('createUser')->willReturn(1);
-```
-
-For better IDE  support you may better use the `mockMethod` helper:
-
-```php
-$this->mockMethod([UserReaderRepository::class, 'getUserById'])
-    ->willReturn(['example' => 'data']);
-```
-
-### Mocking Date and Time
-
-```php
-use Cake\Chronos\Chronos;
-
-Chronos::setTestNow('2021-02-01 00:00:00');
-```
-
 ## HTTP Tests
 
 The `AppTestTrait` provides methods for making HTTP requests to your 
@@ -97,7 +66,7 @@ $request = $this->createFormRequest('POST', '/users', ['name' => 'Sally']);
 
 ### Creating a query string
 
-The [http_build_query](https://www.php.net/manual/en/function.http-build-query.php) can generate
+The `withQueryParams` method can generate
 URL-encoded query strings. Example:
 
 ```php
@@ -105,16 +74,17 @@ $params = [
     'limit' => 10,
 ];
 
-$url = sprintf('/users?%s', http_build_query($params));
-// $url is now: /users?limit=10
+$request = $this->createRequest('GET', '/users');
 
-$request = $this->createRequest('GET', $url);
+// /users?limit=10
+$request = $request->withQueryParams($params);
 ```
 
 ### Add BasicAuth to the request
 
 ```php
-$request = $this->withHttpBasicAuth($request);
+$credentials = base64_encode('username:password');
+$request = $request->withHeader('Authorization', sprintf('Basic %s', $credentials));
 ```
 
 ### Invoking a request
@@ -141,108 +111,19 @@ $this->assertJsonContentType($response);
 Asserting JSON response data:
 
 ```php
-$this->assertJsonData([
+$expected = [
     'user_id' => 1,
     'username' => 'admin',
     'first_name' => 'John',
     'last_name' => 'Doe',
     'email' => 'john.doe@example.com',
-], $response);
+];
+
+$this->assertJsonData($expected, $response);
 ```
 
 You can find more examples in: `tests/TestCase/Action/`
 
-## Database Testing
-
-The `DatabaseTestTrait` provides methods
-for all these stages of a database test:
-
-* Import the database schema (table structure)
-* Insert the fixtures (rows) required for the test.
-* Execute the test 
-* Verify the state of the tables
-* Cleanup the tables for each new test
-
-### Test fixtures
-
-Insert multiple fixtures at once:
-
-```php
-use App\Test\Fixture\UserFixture;
-
-$this->insertFixtures([UserFixture::class]);
-```
-
-Insert manual fixtures:
-
-```php
-$this->insertFixture('tablename', $row);
-```
-
-### Database asserts
-
-Assert a number of rows in a given table:
-
-```php
-$this->assertTableRowCount(1, 'users');
-```
-
-Assert the given row exists:
-
-```php
-$this->assertTableRowExists('users', 1);
-```
-
-Assert that the given row does not exist:
-
-```php
-$this->assertTableRowNotExists('users', 1);
-```
-
-Assert row values:
-
-```php
-$this->assertTableRow($expected, 'users', 1);
-```
-
-Assert a specific set of row values:
-
-```php
-$this->assertTableRow($expected, 'users', 1, ['email', 'url']);
-```
-
-```php
-$this->assertTableRow($expected, 'users', 1, array_keys($expected));
-```
-
-Assert a specific value in a given table, row and field:
-
-```php
-$this->assertTableRowValue('1', 'users', 1, 'id');
-```
-
-Read single value from table by id:
-
-```php
-$password = $this->getTableRowById('users', 1)['password'];
-```
-
-## Performance Testing
-
-* [Slim 4 - Performance Testing](https://odan.github.io/2019/12/20/slim4-performance-testing.html)
-
-## Debugging Tests
-
-To debug tests in [PhpStorm](https://www.jetbrains.com/phpstorm/), you have to mark the `tests/` directory as test sources root. 
-
-* Open the project in PhpStorm
-* Right click the directory `tests` 
-* Select: `Mark directory as`
-* Click `Test Sources Root`
-* Set a breakpoint within a test method
-* Right click `test`
-* Click `Debug (tests) PHPUnit`
-
 ## Read more
 
-* [Slim 4 - Testing](https://odan.github.io/2020/06/09/slim4-testing.html)
+* [Testing with PHPUnit](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)

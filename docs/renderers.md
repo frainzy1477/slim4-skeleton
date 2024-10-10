@@ -2,7 +2,6 @@
 layout: default
 title: Renderers
 parent: The Basics
-nav_order: 3
 ---
 
 # Renderer
@@ -49,52 +48,10 @@ final class HomeAction
 }
 ```
 
-## TemplateRenderer
-
-Renders data to HTML, using the native PHP template engine for rendering. 
-
-Media type: `text/html`
-
-Methods:
-
-* `template` - Renders a (PHP) template
-
-```php
-<?php
-
-namespace App\Action;
-
-use App\Renderer\HtmlRenderer;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-
-final class HomeAction
-{
-    private HtmlRenderer $renderer;
-    
-    public function __construct(HtmlRenderer $renderer)
-    {
-        $this->renderer = $renderer;
-    }
-
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
-    {
-        $viewData = [];
-        
-        return $this->renderer->template($response, 'home/index.php', $viewData);
-    }
-}
-```
-
-## RedirectRenderer
-
-Methods:
-
-* `redirect` - Builds a redirect for the given url
-* `redirectFor` - Builds a redirect for the given route name
-
 ## Building a filetype specific response
 
-* [Image files](https://odan.github.io/2020/05/07/slim4-working-with-images.html)
-* [Excel files](https://odan.github.io/2017/12/16/creating-and-downloading-excel-files-with-slim.html)
-* [ZIP files](https://github.com/selective-php/zip-responder)
+* [Image files](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
+* [Excel files](https://ko-fi.com/s/e592c10b5f) (Slim 4 - eBook Vol. 2)
+* [PDF files](https://ko-fi.com/s/e592c10b5f) (Slim 4 - eBook Vol. 2)
+* [ZIP files](https://ko-fi.com/s/e592c10b5f) (Slim 4 - eBook Vol. 2)
+* [TCPDF](https://ko-fi.com/s/e592c10b5f) (Slim 4 - eBook Vol. 2)

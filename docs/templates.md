@@ -9,13 +9,16 @@ parent: Advanced
 
 All templates are stored in the directory: `templates/`
 
-This project come with the [slim/php-view](https://github.com/slimphp/PHP-View)
-to render PHP view scripts into a PSR-7 Response object.
+You can install any compatible template engine like the [Twig View](https://github.com/slimphp/Twig-View)
+or the [PHP View](https://github.com/slimphp/PHP-View) package.
 
-Read more about [PHP Templates with Slim](https://odan.github.io/2020/12/09/slim4-php-view.html).
+## Read more
 
-If you want to install Twig, please read these tutorials:
-
-* [Slim 4 - Twig](https://ko-fi.com/s/8864b52774)
-* [Slim 4 - Webpack](https://odan.github.io/2019/09/21/slim4-compiling-assets-with-webpack.html)
-* [Webpack - Bootstrap Icons](https://odan.github.io/2021/01/07/webpack-bootstrap-icons.html)
+* [Blade](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
+* [HTMX](https://ko-fi.com/s/3698cf30f3) (Slim 4 - eBook Vol. 3)
+* [Latte](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
+* [Mustache](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
+* [PHP View Templates](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
+* [Plates](https://ko-fi.com/s/3698cf30f3) (Slim 4 - eBook Vol. 3)
+* [Smarty](https://ko-fi.com/s/e592c10b5f) (Slim 4 - eBook Vol. 2)
+* [Twig](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)

@@ -6,24 +6,14 @@ parent: Advanced
 
 # Console
 
-## Composer scripts
+## Installation
 
-To list all composer scripts, run:
+You'll need to install the Symfony Console component to add command-line capabilities to your project. 
+
+Use Composer to do this:
 
 ```
-composer list
-```
-
-## Commands
-
-The default console executable is: `bin/console.php`
-
-The console command directory is: `src/Console` 
-
-To start the console and list all available commands, run:
-
-``` bash
-php bin/console.php
+composer require symfony/console
 ```
 
 ## Creating a console command
@@ -35,14 +25,10 @@ Create a new command class, e.g. `src/Console/ExampleCommand.php` and copy/paste
 
 namespace App\Console;
 
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Command.
- */
 final class ExampleCommand extends Command
 {
     protected function configure(): void
@@ -55,7 +41,7 @@ final class ExampleCommand extends Command
     
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln(sprintf('<info>Hello, console</info>'));
+        $output->writeln(sprintf('<info>Hello, World!</info>'));
 
         // The error code, 0 on success
         return 0;
@@ -63,14 +49,52 @@ final class ExampleCommand extends Command
 }
 ```
 
-To register a new command you have to open `config/defaults.php` 
-and add a new array entry to `$settings['commands']`.
+## Register the Console Application
+
+To integrate the Console application with your application, 
+you'll need to register it. Create a file, e.g., `bin/console.php`, and add the following code
 
 ```php
-$settings['commands'] = [
-    // ...
-    \App\Console\ExampleCommand::class,
-];
+<?php
+
+use App\Console\ExampleCommand;
+use DI\ContainerBuilder;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$env = (new ArgvInput())->getParameterOption(['--env', '-e'], 'dev');
+
+if ($env) {
+    $_ENV['APP_ENV'] = $env;
+}
+
+/** @var ContainerInterface $container */
+$container = (new ContainerBuilder())
+    ->addDefinitions(__DIR__ . '/../config/container.php')
+    ->build();
+
+try {
+    /** @var Application $application */
+    $application = $container->get(Application::class);
+    
+    // Register your console commands here
+    $application->add($container->get(ExampleCommand::class));
+    
+    exit($application->run());
+} catch (Throwable $exception) {
+    echo $exception->getMessage();
+    exit(1);
+}
+
+```
+
+Set permissions:
+
+```php
+chmod +x bin/console.php
 ```
 
 To start to example command, run:
@@ -82,20 +106,18 @@ php bin/console.php example
 The output:
 
 ```
-Hello, console
+Hello, World!
 ```
 
-Read more: [Symfony Console Commands](https://symfony.com/doc/current/console.html)
+## Console Commands
 
-## Managing Locks
+To list all available commands, run:
 
-Locks are used to guarantee exclusive access to some shared resource. 
-
-A lock can be used to ensure that the server starts only one 
-specific cronjob or console command at the same time.
-
-* [The Lock Component](https://symfony.com/doc/current/components/lock.html)
+``` bash
+php bin/console.php
+```
 
 ## Read more
 
-* [Slim 4 - Console](https://odan.github.io/2021/06/23/slim-console.html)
+* [Symfony Console Commands](https://symfony.com/doc/current/console.html)
+* [Console](https://ko-fi.com/s/5f182b4b22) (Slim 4 - eBook Vol. 1)
